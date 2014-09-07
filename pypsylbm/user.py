@@ -1,6 +1,6 @@
 
 class User(object): 
-  """ User of the specific account """
+    """ User of the specific account """
 
     def __init__(self, name):
         self.__name = name
