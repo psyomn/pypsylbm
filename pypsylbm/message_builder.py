@@ -1,12 +1,31 @@
 from pypsylbm import user
 
 class MessageBuilder(object):
-    """ 
-    Building text messages that will later be used in order to wrap
-    the protocol stuff
-    """
+    """ Builds the text-based protocol messages. """
     
     def __init__(self, user):
         self.__user = user
 
+    def register(self):
+        pass
 
+    def authentication(self):
+        pass
+
+    def insert(self):
+        pass
+
+    def delete(self):
+        pass
+
+    def purge(self):
+        pass
+
+    def login(self):
+        pass
+
+    def sync(self):
+        pass
+
+    def syncdata(self):
+        pass

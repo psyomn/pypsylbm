@@ -1,21 +1,16 @@
+from pypsylbm.config import Config
+
 class CLIParser(object):
     """
     Command line interface to the application.
     """
 
-    def __init__(self, params):
-        """ Params are argument values passed in """
-        self.__values = params
-
     def setup():
         """ If this is a first time run, we send creds, and get a key """
-        print('Executing setup')
+        Config.bootstrap()
 
     def print_help():
         print("usage:")
-        print("    pypsylbm <command> [data]")
-        print()
-        print("commands:")
         print("    pypsylbm set server <host> <port>")
         print("    pypsylbm register <username> <password>")
         print("    pypsylbm login <username> <password>")
@@ -25,6 +20,7 @@ class CLIParser(object):
 
     def execute(args):
         """ Main entry point """
+        CLIParser.setup()
 
         if len(args) == 1:
             CLIParser.print_help()

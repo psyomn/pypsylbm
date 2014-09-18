@@ -14,7 +14,7 @@ setup(
     author='Simon (psyomn) Symeonidis',
     author_email='lethaljellybean@gmail.com',
 
-    packages=['pypsylbm', 'pypsylbm.cli'],
+    packages=['pypsylbm', 'pypsylbm.cli', 'pypsylbm.commands'],
     zip_safe=False,
     scripts=['pypsylbm/bin/pypsylbm', 'pypsylbm/bin/pypsylbm-gtk']
 )

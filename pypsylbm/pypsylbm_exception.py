@@ -1,0 +1,3 @@
+
+class PyPsylbmException(Exception):
+    pass
