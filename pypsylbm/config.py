@@ -1,4 +1,4 @@
-import os
+import os, errno
 
 class Config(object):
     def config_dir_path():
@@ -18,3 +18,8 @@ class Config(object):
         The data directory inside the config dir
         """
         return Config.config_dir_path() + 'pypsylbm' + "/"
+
+    def bootstrap():
+        """ Make init stuff, each time the program runs """
+        os.makedirs(name=data_dir_path(), exist_ok=True)
+        return
