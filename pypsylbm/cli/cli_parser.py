@@ -1,4 +1,8 @@
 from pypsylbm.config import Config
+from pypsylbm.user import User
+
+from pypsylbm.commands.register import Register
+from pypsylbm.commands.authenticate import Authenticate
 
 class CLIParser(object):
     """
@@ -58,9 +62,17 @@ class CLIParser(object):
         print("set")
 
     def register(args):
+        username, password = args[0], args[1]
+        user = User(username, password)
+        reg = Register(user)
+        reg.execute()
         print("register")
 
     def login(args):
+        username, password = args[0], args[1]
+        user = User(username, password)
+        auth = Authenticate(user)
+        auth.execute()
         print('login')
 
     def insert(args):

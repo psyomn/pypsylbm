@@ -1,8 +1,14 @@
+import socket
+from pypsylbm.host import Host 
 
 class Register(object):
     def __init__(self, user):
-        pass
+        self._user = user
 
     def execute(self):
-        print("Sending register request")
-        pass
+        host = Host()
+        message = '|'.join(["reg", self._user.name, self._user.password])
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.sendto(message.encode(), (host.address, host.port))
+
+
