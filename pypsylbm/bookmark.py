@@ -9,17 +9,17 @@ class Bookmark(object):
         self._page = page
 
     @property
-    def name(): return self._name
+    def name(self): return self._name
 
     @property
-    def title(): return self._title
+    def title(self): return self._title
 
     @property
-    def volume(): return self._volume
+    def volume(self): return self._volume
 
     @property 
-    def chapter(): return self._chapter
+    def chapter(self): return self._chapter
 
     @property
-    def page(): return self._page
+    def page(self): return self._page
 
