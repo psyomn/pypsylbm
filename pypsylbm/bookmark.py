@@ -1,12 +1,15 @@
 class Bookmark(object):
     """ Bookmark domain object """ 
 
-    def __init__(self, title, volume, chapter, page):
+    def __init__(self, name, title, volume, chapter, page):
+        self._name = name
         self._title = title 
         self._volume = volume
         self._chapter = chapter
         self._page = page
 
+    @property
+    def name(): return self._name
 
     @property
     def title(): return self._title
@@ -19,3 +22,4 @@ class Bookmark(object):
 
     @property
     def page(): return self._page
+
