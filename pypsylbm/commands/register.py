@@ -11,4 +11,19 @@ class Register(object):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), (host.address, host.port))
 
+        resp = sock.recv(1024).decode()
+        
+        if resp == "regok":
+            print("registration success")
+
+        elif resp == "username-taken":
+            print("username taken; try something else")
+
+        elif resp == "bad-username":
+            print("bad username format")
+
+        else:
+            print("malformed response")
+
+
 
