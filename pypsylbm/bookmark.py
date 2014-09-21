@@ -7,6 +7,7 @@ class Bookmark(object):
         self._volume = volume
         self._chapter = chapter
         self._page = page
+        self._id = None
 
     @property
     def name(self): return self._name
@@ -22,4 +23,10 @@ class Bookmark(object):
 
     @property
     def page(self): return self._page
+
+    @property
+    def id(self): return self._id
+
+    @id.setter
+    def id(self, value): self._id = value
 
