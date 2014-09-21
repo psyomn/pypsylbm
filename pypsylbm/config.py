@@ -3,6 +3,7 @@ import os, errno
 class Config(object):
 
     key_filename = 'key'
+    db_name = 'pypsylbm.sqlite3'
 
     def config_dir_path():
         """ 
@@ -11,7 +12,7 @@ class Config(object):
         """
         name = os.name
         if (name == 'nt'):
-            # TODO not to sure about this
+            # TODO not to sure about this (windows)
             return "%APPDATA%"
         else:
             return os.environ["HOME"] + "/.config/"
@@ -20,6 +21,10 @@ class Config(object):
         """ The data directory inside the config dir """
         # TODO cross platform sep might have an issue? 
         return Config.config_dir_path() + 'pypsylbm' + "/"
+
+    def db_path():
+        """ The sqlite3 database file """
+        return ''.join([Config.data_dir_path(), Config.db_name])
 
     def bootstrap():
         """ Make init stuff, each time the program runs """
@@ -42,4 +47,8 @@ class Config(object):
         f.close()
         return token
 
+    def is_first_setup():
+        """ checks ~/.config and sees if pypsylbm/ exists. True if not """
+        path = Config.data_dir_path()
+        return not os.path.isdir(path)
 

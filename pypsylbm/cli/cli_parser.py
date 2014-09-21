@@ -1,19 +1,14 @@
 from pypsylbm.config import Config
 from pypsylbm.user import User
 from pypsylbm.bookmark import Bookmark
+from pypsylbm.session import Session
 
 from pypsylbm.commands.register import Register
 from pypsylbm.commands.authenticate import Authenticate
 from pypsylbm.commands.insert import Insert
 
 class CLIParser(object):
-    """
-    Command line interface to the application.
-    """
-
-    def setup():
-        """ If this is a first time run, we send creds, and get a key """
-        Config.bootstrap()
+    """ Command line interface to the application. """
 
     def print_help():
         print("usage:")
@@ -26,7 +21,8 @@ class CLIParser(object):
 
     def execute(args):
         """ Main entry point """
-        CLIParser.setup()
+
+        sess = Session()
 
         if len(args) == 1:
             CLIParser.print_help()
@@ -44,13 +40,13 @@ class CLIParser(object):
             elif cmd == 'login':    
                 CLIParser.login(rest)
 
-            elif cmd == 'i' or cmd == 'insert':
+            elif cmd in ['i', 'insert']:
                 CLIParser.insert(rest)
 
-            elif cmd == 'ls' or cmd == 'list': 
+            elif cmd in ['ls', 'list']:
                 CLIParser.ls(rest)
 
-            elif cmd == 'help' or cmd == 'h':
+            elif cmd in ['h', 'help']:
                 CLIParser.print_help()
 
             else:

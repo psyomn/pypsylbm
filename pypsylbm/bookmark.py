@@ -48,6 +48,9 @@ class Bookmark(object):
 
     sql_select = sql_all + " where_id = ?"
 
+    sql_update = "update " + sql_table_name + " set " \
+        "id = ?, name = ?, title = ?, volume = ?, chapter = ?, page = ? "\
+
     def insert(self): pass
 
     def delete(self): pass
