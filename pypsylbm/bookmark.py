@@ -30,3 +30,31 @@ class Bookmark(object):
     @id.setter
     def id(self, value): self._id = value
 
+    # Active record stuff
+
+    sql_table_name = "bookmarks" 
+
+    sql_create = "create table " + sql_table_name + "(" \
+        "id INTEGER, name TEXT, title TEXT, volume INTEGER, " \
+        "chapter INTEGER, page INTEGER);"
+
+    sql_insert = "insert into " + sql_table_name + " (" \
+        "id,name,title,volume,chapter,page) values " \
+        "(?,?,?,?,?,?);"
+
+    sql_delete = "delete from " + sql_table_name + " where id = ?"
+    
+    sql_all = "select * from " + sql_table_name
+
+    sql_select = sql_all + " where_id = ?"
+
+    def insert(self): pass
+
+    def delete(self): pass
+
+    def update(self): pass
+
+    def select(self): pass
+
+    def all(self): pass
+
