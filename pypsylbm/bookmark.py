@@ -58,3 +58,7 @@ class Bookmark(object):
 
     def all(self): pass
 
+    def create_table(db):
+        db.execute(Bookmark.sql_create)
+        db.commit()
+
