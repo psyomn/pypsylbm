@@ -25,5 +25,21 @@ class Insert(object):
         sock.sendto(message.encode(), (host.address, host.port))
 
         resp = sock.recv(1024).decode()
+        self._handle_response(resp)
 
-        print(resp)
+    def _handle_response(self, response):
+        status = resp.split("|")[1]
+
+        if status == "ok":
+            bm_id = int(resp.split("|")[2])
+            self._bookmark.identification = bm_id 
+            self._bookmark.insert()
+            print("stored bookmark")
+
+        elif status == "fail":
+            print("Problem inserting bookmark")
+
+        else:
+            print("Malformed reply")
+
+
