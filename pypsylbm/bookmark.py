@@ -1,7 +1,7 @@
 class Bookmark(object):
     """ Bookmark domain object """ 
 
-    def __init__(session, self, name, title, volume, chapter, page):
+    def __init__(self, session, name, title, volume, chapter, page):
         self._session = session
         self._name = name
         self._title = title 
@@ -28,8 +28,8 @@ class Bookmark(object):
     @property
     def identification(self): return self._id
 
-    @id.setter
-    def id(self, value): self._id = value
+    @identification.setter
+    def identification(self, value): self._id = value
 
     # Active record stuff
 
@@ -54,18 +54,20 @@ class Bookmark(object):
         "WHERE id = ?"
 
     def insert(self):
-        self._session.db.execute(sql_insert, (self.id, self.name, self.title,
+        self._session.db.execute(Bookmark.sql_insert, 
+            (self.identification, self.name, self.title,
             self.volume, self.chapter, self.page))
+        self._session.db.commit()
 
     def delete(self):
-        self._session.db.execute(sql_delete, (self.id))
+        self._session.db.execute(Bookmark.sql_delete, (self.identification))
 
     def update(self):
-        self._session.db.execute(sql_update, (self.id, self.name, self.title,
-            self.volume, self.chapter, self.page, self.id))
+        self._session.db.execute(Bookmark.sql_update, (self.identification, self.name, self.title,
+            self.volume, self.chapter, self.page, self.identification))
 
-    def select(self):
-        row = self._session.db.execute(sql_select, (self.id))[0]
+    def select(self, idnum):
+        row = self._session.db.execute(Bookmark.sql_select, (idnum))[0]
 
         bookmark = Bookmark(
           self._session, 
@@ -75,13 +77,13 @@ class Bookmark(object):
           row[4], # chapter
           row[5]) # page
 
-        bookmark.id = row[0]
+        bookmark.identification = row[0]
 
         return bookmark
         
 
     def all(self):
-        rows = self._session.db.execute(sql_all)
+        rows = self._session.db.execute(Bookmark.sql_all)
 
     def create_table(db):
         db.execute(Bookmark.sql_create)

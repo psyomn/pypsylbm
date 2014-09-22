@@ -6,6 +6,7 @@ from pypsylbm.session import Session
 from pypsylbm.commands.register import Register
 from pypsylbm.commands.authenticate import Authenticate
 from pypsylbm.commands.insert import Insert
+from pypsylbm.session import Session
 
 class CLIParser(object):
     """ Command line interface to the application. """
@@ -15,7 +16,8 @@ class CLIParser(object):
         print("    pypsylbm set server <host> <port>")
         print("    pypsylbm register <username> <password>")
         print("    pypsylbm login <username> <password>")
-        print("    pypsylbm (i|insert) <booktitle> <volume> <chapter> <page>")
+        print("    pypsylbm (i|insert) <bookmark-label> <booktitle> <volume> <chapter> <page>")
+        print("    pypsylbm (d|delete) <bookmark-id>")
         print("    pypsylbm (ls|list)")
         print() 
 
@@ -49,6 +51,9 @@ class CLIParser(object):
             elif cmd in ['h', 'help']:
                 CLIParser.print_help()
 
+            elif cmd in ['d', 'delete']:
+                CLIParser.delete(rest)
+
             else:
                 print("Invalid command. Try 'help'")
 
@@ -78,14 +83,16 @@ class CLIParser(object):
     def insert(args):
         if not CLIParser._proper_arr_size(args, 5): return
 
+        session = Session()
+
         name, title, = args[0], args[1]
         volume, chapter, page = int(args[2]), int(args[3]), int(args[4])
-        bm = Bookmark(name, title, volume, chapter, page)
+        bm = Bookmark(session, name, title, volume, chapter, page)
         ins = Insert(bm)
         ins.execute()
 
-    def list(args):
-        print('list')
+    def delete(args):
+        print("TODO delete stuff")
 
     def _proper_arr_size(arr, size):
         """ Check if array is of particular size; print error if not """

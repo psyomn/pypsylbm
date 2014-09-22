@@ -28,10 +28,10 @@ class Insert(object):
         self._handle_response(resp)
 
     def _handle_response(self, response):
-        status = resp.split("|")[1]
+        status = response.split("|")[1]
 
         if status == "ok":
-            bm_id = int(resp.split("|")[2])
+            bm_id = int(response.split("|")[2])
             self._bookmark.identification = bm_id 
             self._bookmark.insert()
             print("stored bookmark")
