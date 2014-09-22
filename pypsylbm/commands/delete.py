@@ -9,7 +9,7 @@ class Delete(object):
         self._book = book
         
     def execute(self):
-        message = '|'.join(['del', str(book.id), Config.load_key()])
+        message = '|'.join(['del', str(book.identification), Config.load_key()])
         host = Host()
 
         socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -20,6 +20,7 @@ class Delete(object):
     def __handle_resp(self, response):
         isok = response.split("|")[1]
         if isok == 'ok':
+            self._book.delete()
             print("bookmark deleted")
         else:
             print("problem deleting bookmark")
