@@ -6,6 +6,7 @@ from pypsylbm.session import Session
 from pypsylbm.commands.register import Register
 from pypsylbm.commands.authenticate import Authenticate
 from pypsylbm.commands.insert import Insert
+from pypsylbm.commands.list import List
 from pypsylbm.session import Session
 
 class CLIParser(object):
@@ -59,7 +60,9 @@ class CLIParser(object):
 
 
     def ls(args):
-        print("going to list things")
+        sess = Session()
+        lst = List(sess)
+        lst.execute()
 
     def cmdset(args):
         print("set")

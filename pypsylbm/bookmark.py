@@ -67,7 +67,12 @@ class Bookmark(object):
             self.volume, self.chapter, self.page, self.identification))
 
     def select(self, idnum):
-        row = self._session.db.execute(Bookmark.sql_select, (idnum))[0]
+        """ :return: None if not found. Else bookmark object with row data """
+        self._session.db.execute(Bookmark.sql_select, (idnum))
+        cur = self._session.db.cursor()
+        row = cur.fetchone()
+
+        if row is None: return None
 
         bookmark = Bookmark(
           self._session, 
@@ -82,10 +87,22 @@ class Bookmark(object):
         return bookmark
         
 
-    def all(self):
-        rows = self._session.db.execute(Bookmark.sql_all)
+    def select_all(session):
+        """ :return: a list of bookmarks """
+        lst  = []
+        rows = session.db.execute(Bookmark.sql_all)
+
+        for row in rows: 
+            bm = Bookmark(session, row[1], row[2], row[3], row[4], row[5])
+            bm.identification = row[0]
+            lst.append(bm)
+
+        return lst
 
     def create_table(db):
         db.execute(Bookmark.sql_create)
         db.commit()
+
+    def __str__(self):
+        return "  [%d] (%s) %s" % (self.identification, self.name, self.title)
 
