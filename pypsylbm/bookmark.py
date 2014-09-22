@@ -1,7 +1,8 @@
 class Bookmark(object):
     """ Bookmark domain object """ 
 
-    def __init__(self, name, title, volume, chapter, page):
+    def __init__(session, self, name, title, volume, chapter, page):
+        self._session = session
         self._name = name
         self._title = title 
         self._volume = volume
@@ -25,7 +26,7 @@ class Bookmark(object):
     def page(self): return self._page
 
     @property
-    def id(self): return self._id
+    def identification(self): return self._id
 
     @id.setter
     def id(self, value): self._id = value
@@ -46,20 +47,41 @@ class Bookmark(object):
     
     sql_all = "select * from " + sql_table_name
 
-    sql_select = sql_all + " where_id = ?"
+    sql_select = sql_all + " where id = ?"
 
     sql_update = "update " + sql_table_name + " set " \
         "id = ?, name = ?, title = ?, volume = ?, chapter = ?, page = ? "\
+        "WHERE id = ?"
 
-    def insert(self): pass
+    def insert(self):
+        self._session.db.execute(sql_insert, (self.id, self.name, self.title,
+            self.volume, self.chapter, self.page))
 
-    def delete(self): pass
+    def delete(self):
+        self._session.db.execute(sql_delete, (self.id))
 
-    def update(self): pass
+    def update(self):
+        self._session.db.execute(sql_update, (self.id, self.name, self.title,
+            self.volume, self.chapter, self.page, self.id))
 
-    def select(self): pass
+    def select(self):
+        row = self._session.db.execute(sql_select, (self.id))[0]
 
-    def all(self): pass
+        bookmark = Bookmark(
+          self._session, 
+          row[1], # name 
+          row[2], # title
+          row[3], # volume
+          row[4], # chapter
+          row[5]) # page
+
+        bookmark.id = row[0]
+
+        return bookmark
+        
+
+    def all(self):
+        rows = self._session.db.execute(sql_all)
 
     def create_table(db):
         db.execute(Bookmark.sql_create)
