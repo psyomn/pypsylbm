@@ -50,7 +50,7 @@ class Bookmark(object):
     sql_select = sql_all + " where id = ?"
 
     sql_update = "update " + sql_table_name + " set " \
-        "id = ?, name = ?, title = ?, volume = ?, chapter = ?, page = ? "\
+        "name = ?, title = ?, volume = ?, chapter = ?, page = ? "\
         "WHERE id = ?"
 
     def insert(self):
@@ -63,13 +63,14 @@ class Bookmark(object):
         self._session.db.execute(Bookmark.sql_delete, (self.identification))
 
     def update(self):
-        self._session.db.execute(Bookmark.sql_update, (self.identification, self.name, self.title,
+        self._session.db.execute(Bookmark.sql_update, (self.name, self.title,
             self.volume, self.chapter, self.page, self.identification))
+        self._session.db.commit()
 
     def select(self, idnum):
         """ :return: None if not found. Else bookmark object with row data """
-        self._session.db.execute(Bookmark.sql_select, (idnum))
         cur = self._session.db.cursor()
+        cur.execute(Bookmark.sql_select, (idnum,))
         row = cur.fetchone()
 
         if row is None: return None
