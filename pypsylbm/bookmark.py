@@ -66,7 +66,7 @@ class Bookmark(object):
         self._session.db.execute(Bookmark.sql_update, (self.identification, self.name, self.title,
             self.volume, self.chapter, self.page, self.identification))
 
-    def select(idnum):
+    def select(self, idnum):
         """ :return: None if not found. Else bookmark object with row data """
         self._session.db.execute(Bookmark.sql_select, (idnum))
         cur = self._session.db.cursor()
