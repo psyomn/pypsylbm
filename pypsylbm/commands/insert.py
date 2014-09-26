@@ -33,8 +33,15 @@ class Insert(object):
         if status == "ok":
             bm_id = int(response.split("|")[2])
             self._bookmark.identification = bm_id 
-            self._bookmark.insert()
-            print("stored bookmark")
+
+            if self._bookmark.select(bm_id) == None:
+                self._bookmark.insert()
+                print("stored bookmark")
+
+            else:
+                self._bookmark.update()
+                print("updated bookmark")
+
 
         elif status == "fail":
             print("Problem inserting bookmark")
